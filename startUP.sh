@@ -2,7 +2,7 @@
 
 if [ "$TYPE" = "client" ] || [ "$TYPE" == "both" ]
 then
-	echo '0 * * * * rsync -aze "ssh -p 22" root@ssh-server-service:/var/backup/ /var/backup' >> cronjobs
+	echo '0 * * * * rsync -aze "ssh -p 22" root@$SERVER_ADDRESS:/var/backup/ /var/backup' >> cronjobs
 	crontab cronjobs
 	rm cronjobs
 	/usr/sbin/cron -f
