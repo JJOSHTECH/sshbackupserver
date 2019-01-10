@@ -18,11 +18,14 @@ VOLUME ["/etc/ssh/"]
 # Create Volume for Backup Folder
 VOLUME ["/var/backup/"]
 
-# Enviroment Variable for deciding the container type
-# server = ssh Server läuft im Vordergrund
-# client = kein SSH Server & cron job für die ausführung des rsync befehls
-# both = macht beides
+# Enviroment variable for deciding the container type
+# server = ssh server runs in foreground
+# client = no ssh server & cron job to run rsync
+# both = do both server & client
 ENV TYPE="server"
+
+# Enviroment to describe the server from which you want to make an update
+ENV SERVER_ADDRESS="localhost"
 
 # copy startUp script into container
 COPY ./startUP.sh /root/startUP.sh
