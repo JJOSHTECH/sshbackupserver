@@ -32,7 +32,7 @@ ENV PORT="22"
 COPY ./startUP.sh ./startUP.sh
 
 # add run permissions to startUP script
-RUN chmod +x /root/startUP.sh
+RUN chmod +x ./startUP.sh
 
 # Start SSH Server in Debug mode
 CMD ["./startUP.sh"]
