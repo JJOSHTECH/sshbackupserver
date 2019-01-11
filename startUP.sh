@@ -1,16 +1,23 @@
 #!/bin/bash
 
-if [ "$TYPE" = "client" ] || [ "$TYPE" == "both" ]
+if [ "$TYPE" == "both" ]
 then
 	echo '0 * * * * rsync -vaze "ssh -p $PORT" root@$SERVER_ADDRESS:/var/backup/ /var/backup' >> cronjobs
 	crontab cronjobs
 	rm cronjobs
 	/usr/sbin/cron -f &
+	/usr/sbin/sshd -p 22 -D -e
 fi
 
-if [ "$TYPE" == "server" ] || [ "$TYPE" == "both" ]
+if [ "$TYPE" = "client" ]
 then
-	/usr/sbin/sshd -p 22 -D -e &
+	echo '0 * * * * rsync -vaze "ssh -p $PORT" root@$SERVER_ADDRESS:/var/backup/ /var/backup' >> cronjobs
+	crontab cronjobs
+	rm cronjobs
+	/usr/sbin/cron -f
 fi
 
-fg
+if [ "$TYPE" == "server" ]
+then
+	/usr/sbin/sshd -p 22 -D -e
+fi
