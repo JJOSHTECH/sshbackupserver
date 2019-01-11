@@ -26,15 +26,16 @@ ENV TYPE="server"
 
 # Enviroment to describe the server from which you want to make an update
 ENV SERVER_ADDRESS="localhost"
+ENV PORT="22"
 
 # copy startUp script into container
-COPY ./startUP.sh /root/startUP.sh
+COPY ./startUP.sh ./startUP.sh
 
 # add run permissions to startUP script
 RUN chmod +x /root/startUP.sh
 
 # Start SSH Server in Debug mode
-CMD ["/root/startUP.sh"]
+CMD ["./startUP.sh"]
 
 # Expose ssh Port
 EXPOSE 22
