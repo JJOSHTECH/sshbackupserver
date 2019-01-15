@@ -4,6 +4,9 @@ FROM arm32v7/debian:latest
 #ARM Support
 COPY qemu-arm-static /usr/bin
 
+#Copy Cronjob File into Container
+COPY cronjob /etc/cron.d/cronjob
+
 # Update and Upgrade Repo
 RUN apt update && apt full-upgrade -y && apt autoremove && apt clean
 
@@ -13,6 +16,9 @@ RUN apt install openssh-server rsync cron -y
 # Start and restart ssh Server for initial Setup
 RUN service ssh start
 RUN service ssh stop
+
+# Activate Cronjobs
+RUN crontab /etc/cron.d/cronjob
 
 # Create Volume for Certs
 VOLUME ["/root/.ssh/"]
