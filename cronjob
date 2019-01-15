@@ -1,0 +1,1 @@
+0 * * * * rsync -vaze "ssh -p $PORT" root@$SERVER_ADDRESS:/var/backup/ /var/backup/ >> /dev/stdout
