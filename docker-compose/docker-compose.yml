@@ -3,17 +3,17 @@ volumes:
         certs-volume:
                 driver_opts:
                         type: "none"
-                        device: "/path/"
+                        device: "/<path>/"
                         o: "bind"
         conf-volume:
                 driver_opts:
                         type: "none"
-                        device: "/path/"
+                        device: "/<path>/"
                         o: "bind"
         backup-data-volume:
                 driver_opts:
                         type: "none"
-                        device: "/path/"
+                        device: "/<path>/"
                         o: "bind"
 services:
         sshbackupserver:
@@ -21,9 +21,7 @@ services:
                 container_name: "sshbackupserver"
                 hostname: "sshbackupserver"
                 ports:
-                  - "59998:22"
-                environment:
-                  - PORT: "22"
+                  - "<PORT>:22"
                 volumes:
                   - "certs-volume:/root/.ssh/"
                   - "conf-volume:/etc/ssh/"
