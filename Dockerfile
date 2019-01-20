@@ -18,11 +18,8 @@ VOLUME ["/etc/ssh/"]
 # Create Volume for Backup Folder
 VOLUME ["/var/backup/"]
 
-# Enviroment to describe the Port the Server should listen to
-ENV PORT="22"
-
 # Start SSH Server in Debug mode
-CMD ["/usr/sbin/sshd","-p","$PORT","-D","-e"]
+CMD ["/usr/sbin/sshd","-p","22","-D","-e"]
 
 # Expose ssh Port
 EXPOSE 22
