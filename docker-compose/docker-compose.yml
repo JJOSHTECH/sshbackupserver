@@ -1,0 +1,31 @@
+version: '3.6'
+volumes:
+        certs-volume:
+                driver_opts:
+                        type: "none"
+                        device: "/path/"
+                        o: "bind"
+        conf-volume:
+                driver_opts:
+                        type: "none"
+                        device: "/path/"
+                        o: "bind"
+        backup-data-volume:
+                driver_opts:
+                        type: "none"
+                        device: "/path/"
+                        o: "bind"
+services:
+        sshbackupserver:
+                image: "jjoshtech/sshbackupserver"
+                container_name: "sshbackupserver"
+                hostname: "sshbackupserver"
+                ports:
+                  - "59998:22"
+                environment:
+                  - PORT: "22"
+                volumes:
+                  - "certs-volume:/root/.ssh/"
+                  - "conf-volume:/etc/ssh/"
+                  - "docker-data-volume:/var/backup/"
+                restart: "unless-stopped"
