@@ -1,24 +1,15 @@
 # Use a Debian Image
-FROM arm32v7/debian:latest
-
-#ARM Support
-COPY qemu-arm-static /usr/bin
-
-#Copy Cronjob File into Container
-COPY cronjob /etc/cron.d/cronjob
+FROM debian:latest
 
 # Update and Upgrade Repo
 RUN apt update && apt full-upgrade -y && apt autoremove && apt clean
 
 # Install rsync and opsenssh
-RUN apt install openssh-server rsync cron -y
+RUN apt install openssh-server -y
 
 # Start and restart ssh Server for initial Setup
 RUN service ssh start
 RUN service ssh stop
-
-# Activate Cronjobs
-RUN crontab /etc/cron.d/cronjob
 
 # Create Volume for Certs
 VOLUME ["/root/.ssh/"]
@@ -27,24 +18,11 @@ VOLUME ["/etc/ssh/"]
 # Create Volume for Backup Folder
 VOLUME ["/var/backup/"]
 
-# Enviroment variable for deciding the container type
-# server = ssh server runs in foreground
-# client = no ssh server & cron job to run rsync
-# both = do both server & client
-ENV TYPE="server"
-
-# Enviroment to describe the server from which you want to make an update
-ENV SERVER_ADDRESS="localhost"
-ENV PORT="22"
-
-# copy startUp script into container
-COPY ./startUP.sh ./startUP.sh
-
-# add run permissions to startUP script
-RUN chmod +x ./startUP.sh
+# Copy sshd config to Image
+COPY ./conf/sshd_config /etc/ssh/sshd_config
 
 # Start SSH Server in Debug mode
-CMD ["./startUP.sh"]
+CMD ["/usr/sbin/sshd","-p","22","-D","-e"]
 
 # Expose ssh Port
 EXPOSE 22
