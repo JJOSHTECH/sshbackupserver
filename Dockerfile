@@ -18,6 +18,9 @@ VOLUME ["/etc/ssh/"]
 # Create Volume for Backup Folder
 VOLUME ["/var/backup/"]
 
+# Copy sshd config to Image
+COPY ./sshd_config /etc/ssh/sshd_config
+
 # Start SSH Server in Debug mode
 CMD ["/usr/sbin/sshd","-p","22","-D","-e"]
 
