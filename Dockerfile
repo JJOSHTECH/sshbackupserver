@@ -5,7 +5,7 @@ FROM debian:latest
 RUN apt update && apt full-upgrade -y && apt autoremove && apt clean
 
 # Install rsync and opsenssh
-RUN apt install openssh-server -y
+RUN apt install openssh-server rsync -y
 
 # Start and restart ssh Server for initial Setup
 RUN service ssh start
