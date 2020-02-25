@@ -25,5 +25,5 @@ services:
                 volumes:
                   - "certs-volume:/root/.ssh/"
                   - "conf-volume:/etc/ssh/"
-                  - "docker-data-volume:/var/backup/"
+                  - "backup-data-volume:/var/backup/"
                 restart: "unless-stopped"
